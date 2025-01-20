@@ -1,5 +1,4 @@
-PC-Businessmenucards
-PC-Businessmenucards is a FiveM script that allows server owners to create interactive business menus with NPCs or props. Each business can have a unique menu, and players can interact with NPCs or props to view the business menu and make purchases.
+PC-Businessmenudisplay is a FiveM script that allows server owners to create interactive business menus with NPCs or props. Each business can have a unique menu, and players can interact with NPCs or props to view the business menu and make purchases.
 
 Features:
 Fully configurable for businesses, NPCs, or props.
@@ -11,7 +10,7 @@ Installation:
 
  1. Download and Install:
       1. Download or clone the repository to your server.
-      2. Place the pc-businessmenucards folder into your resources directory.
+      2. Place the pc-businessmenudisplay folder into your resources directory.
 2. Edit Config:
       1. Navigate to config.lua and configure your businesses:
           a. Set business name, coordinates, and menu image for each business.
