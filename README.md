@@ -24,6 +24,7 @@ Installation:
 
 
       Example Config:
+```
 Config.Businesses = {
     uwu_cafe = {
         usePed = true,  -- Use NPC instead of prop
