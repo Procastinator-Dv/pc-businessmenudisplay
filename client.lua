@@ -1,4 +1,4 @@
-print("^1pc-businessmenucards by Procastinator V.1.0^7")
+print("^1pc-businessmenudisplay by Procastinator V.1.0^7")
 
 local isMenuVisible = false  -- Boolean to track if the menu is visible
 local spawnedProps = {}  -- Table to store created props
