@@ -8,16 +8,17 @@ Interaction using qb-target for easy configuration.
 Option to use either ped (NPC) or prop for business interactions.
 Server console message on script load with version info.
 Installation:
- I: Download and Install:
+
+ 1. Download and Install:
       1. Download or clone the repository to your server.
       2. Place the pc-businessmenucards folder into your resources directory.
-II: Edit Config:
+2. Edit Config:
       1. Navigate to config.lua and configure your businesses:
           a. Set business name, coordinates, and menu image for each business.
           b. Choose whether to use a ped (NPC) or prop for interaction.
-III: Add to server.cfg:
+3.: Add to server.cfg:
       1. Add start pc-businessmenucards to your server.cfg to load the script.
-IV: Restart the Server:
+4. Restart the Server:
       1. Restart your FiveM server to load the script.
 
 
