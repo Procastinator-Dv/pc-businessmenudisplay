@@ -39,7 +39,7 @@ Config.Businesses = {
         menuImage = 'business_menu.png'  -- Menu image for the business
     }
 }
-
+```
 
 Customization:
   1. Ped vs. Prop: Choose whether each business uses an NPC (ped) or a prop by setting usePed to true or false in the config.
