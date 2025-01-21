@@ -5,7 +5,9 @@ Fully configurable for businesses, NPCs, or props.
 Display custom menu images for each business.
 Interaction using qb-target for easy configuration.
 Option to use either ped (NPC) or prop for business interactions.
-Server console message on script load with version info.
+
+Heres a Video Preview : https://youtu.be/JPjYXLPen9o
+
 Installation:
 
  1. Download and Install:
