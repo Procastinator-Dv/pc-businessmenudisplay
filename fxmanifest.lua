@@ -4,6 +4,8 @@ game 'gta5'
 author 'Procastinator'
 version ' 1.0'
 
+shared_script '@ox_lib/init.lua'
+
 client_scripts {
     'config.lua',  -- Add this line to ensure the config file is loaded
     'client.lua'
