@@ -1,13 +1,13 @@
 print("^1pc-businessmenudisplay by Procastinator V.1.0^7")
 
-local isMenuVisible = false  -- Boolean to track if the menu is visible
-local spawnedProps = {}  -- Table to store created props
+local isMenuVisible = false  -- Boolean para rastrear se o menu está visível
+local spawnedProps = {}  -- Tabela para armazenar props criados
 
--- Function to spawn the ped for each business
+-- Função para spawnar o ped para cada negócio
 Citizen.CreateThread(function()
     for businessName, business in pairs(Config.Businesses) do
         if business.usePed then
-            -- Load and spawn the ped
+            -- Carregar e spawnar o ped
             local pedModel = business.pedModel
             local coords = business.coords
 
@@ -21,21 +21,19 @@ Citizen.CreateThread(function()
             SetEntityVisible(ped, true, false)
             FreezeEntityPosition(ped, true)
 
-            -- Set up interaction with `qb-target`
-            exports['qb-target']:AddTargetEntity(ped, {
-                options = {
-                    {
-                        type = "client",
-                        event = "showBusinessMenu",
-                        icon = "fas fa-file",
-                        label = "Show Menu",
-                        business = businessName,
-                    },
-                },
-                distance = 3.0
+            -- Configurar interação com `ox_target`
+            exports['ox_target']:addLocalEntity(ped, {
+                {
+                    name = 'showBusinessMenu',
+                    onSelect = function()
+                        TriggerEvent('showBusinessMenu', { business = businessName })
+                    end,
+                    icon = 'fas fa-file',
+                    label = 'Mostrar Menu',
+                }
             })
         else
-            -- Load and spawn the prop
+            -- Carregar e spawnar o prop
             local propModel = business.propModel
             local coords = business.propCoords
 
@@ -48,65 +46,62 @@ Citizen.CreateThread(function()
             SetEntityRotation(prop, 0.0, 0.0, 0.0, 2, true)
             FreezeEntityPosition(prop, true)
 
-            -- Add prop to the spawnedProps table for cleanup
+            -- Adicionar prop à tabela spawnedProps para limpeza
             table.insert(spawnedProps, prop)
 
-            -- Set up interaction with `qb-target`
-            exports['qb-target']:AddTargetEntity(prop, {
-                options = {
-                    {
-                        type = "client",
-                        event = "showBusinessMenu",
-                        icon = "fas fa-file",
-                        label = "Show Menu",
-                        business = businessName,
-                    },
-                },
-                distance = 3.0
+            -- Configurar interação com `ox_target`
+            exports['ox_target']:addLocalEntity(prop, {
+                {
+                    name = 'showBusinessMenu',
+                    onSelect = function()
+                        TriggerEvent('showBusinessMenu', { business = businessName })
+                    end,
+                    icon = 'fas fa-file',
+                    label = 'Mostrar Menu',
+                }
             })
         end
     end
 end)
 
--- Function to delete all spawned props
+-- Função para deletar todos os props spawnados
 function deleteSpawnedProps()
     for _, prop in ipairs(spawnedProps) do
         if DoesEntityExist(prop) then
             DeleteEntity(prop)
         end
     end
-    spawnedProps = {}  -- Clear the table after deleting props
+    spawnedProps = {}  -- Limpar a tabela após deletar os props
 end
 
--- Event to handle resource stop/restart
+-- Evento para lidar com a parada/reinício do recurso
 AddEventHandler('onResourceStop', function(resourceName)
     if resourceName == GetCurrentResourceName() then
-        deleteSpawnedProps()  -- Delete spawned props when the resource stops
+        deleteSpawnedProps()  -- Deletar props spawnados quando o recurso parar
     end
 end)
 
--- Event to show the menu for the selected business
+-- Evento para mostrar o menu para o negócio selecionado
 RegisterNetEvent('showBusinessMenu', function(data)
     if not isMenuVisible then
         isMenuVisible = true
         local business = Config.Businesses[data.business]
         
-        -- Send the PNG file path to the NUI
+        -- Enviar o caminho do arquivo PNG para o NUI
         SendNUIMessage({
             type = "showMenu",
-            menuImage = business.menuImage  -- Send the PNG file for the menu
+            menuImage = business.menuImage  -- Enviar o PNG para o menu
         })
     end
 end)
 
--- Listen for Escape key to close the menu
+-- Ouvir a tecla Escape para fechar o menu
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-        if isMenuVisible and IsControlJustPressed(0, 177) then  -- Escape button
+        if isMenuVisible and IsControlJustPressed(0, 177) then  -- Botão Escape
             isMenuVisible = false
-            SendNUIMessage({ type = "closeMenu" })  -- Close the menu
+            SendNUIMessage({ type = "closeMenu" })  -- Fechar o menu
         end
     end
 end)
-
