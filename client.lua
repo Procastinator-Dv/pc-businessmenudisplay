@@ -1,13 +1,13 @@
 print("^1pc-businessmenudisplay by Procastinator V.1.0^7")
 
-local isMenuVisible = false  -- Boolean para rastrear se o menu está visível
-local spawnedProps = {}  -- Tabela para armazenar props criados
+local isMenuVisible = false  -- Boolean to track if the menu is visible
+local spawnedProps = {}  -- Table to store created props
 
--- Função para spawnar o ped para cada negócio
+-- Function to spawn the ped for each business
 Citizen.CreateThread(function()
     for businessName, business in pairs(Config.Businesses) do
         if business.usePed then
-            -- Carregar e spawnar o ped
+            -- Load and spawn the ped
             local pedModel = business.pedModel
             local coords = business.coords
 
@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
             SetEntityVisible(ped, true, false)
             FreezeEntityPosition(ped, true)
 
-            -- Configurar interação com `ox_target`
+            -- Set up interaction with `ox_target`
             exports['ox_target']:addLocalEntity(ped, {
                 {
                     name = 'showBusinessMenu',
@@ -29,11 +29,11 @@ Citizen.CreateThread(function()
                         TriggerEvent('showBusinessMenu', { business = businessName })
                     end,
                     icon = 'fas fa-file',
-                    label = 'Mostrar Menu',
+                    label = 'Show Menu',
                 }
             })
         else
-            -- Carregar e spawnar o prop
+            -- Load and spawn the prop
             local propModel = business.propModel
             local coords = business.propCoords
 
@@ -46,10 +46,10 @@ Citizen.CreateThread(function()
             SetEntityRotation(prop, 0.0, 0.0, 0.0, 2, true)
             FreezeEntityPosition(prop, true)
 
-            -- Adicionar prop à tabela spawnedProps para limpeza
+            -- Add prop to the spawnedProps table for cleanup
             table.insert(spawnedProps, prop)
 
-            -- Configurar interação com `ox_target`
+            -- Set up interaction with `ox_target`
             exports['ox_target']:addLocalEntity(prop, {
                 {
                     name = 'showBusinessMenu',
@@ -57,51 +57,52 @@ Citizen.CreateThread(function()
                         TriggerEvent('showBusinessMenu', { business = businessName })
                     end,
                     icon = 'fas fa-file',
-                    label = 'Mostrar Menu',
+                    label = 'Show Menu',
                 }
             })
         end
     end
 end)
 
--- Função para deletar todos os props spawnados
+-- Function to delete all spawned props
 function deleteSpawnedProps()
     for _, prop in ipairs(spawnedProps) do
         if DoesEntityExist(prop) then
             DeleteEntity(prop)
         end
     end
-    spawnedProps = {}  -- Limpar a tabela após deletar os props
+    spawnedProps = {}  -- Clear the table after deleting props
 end
 
--- Evento para lidar com a parada/reinício do recurso
+-- Event to handle resource stop/restart
 AddEventHandler('onResourceStop', function(resourceName)
     if resourceName == GetCurrentResourceName() then
-        deleteSpawnedProps()  -- Deletar props spawnados quando o recurso parar
+        deleteSpawnedProps()  -- Delete spawned props when the resource stops
     end
 end)
 
--- Evento para mostrar o menu para o negócio selecionado
+-- Event to show the menu for the selected business
 RegisterNetEvent('showBusinessMenu', function(data)
     if not isMenuVisible then
         isMenuVisible = true
         local business = Config.Businesses[data.business]
         
-        -- Enviar o caminho do arquivo PNG para o NUI
+        -- Send the PNG file path to the NUI
         SendNUIMessage({
             type = "showMenu",
-            menuImage = business.menuImage  -- Enviar o PNG para o menu
+            menuImage = business.menuImage  -- Send the PNG file for the menu
         })
     end
 end)
 
--- Ouvir a tecla Escape para fechar o menu
+-- Listen for Escape key to close the menu
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-        if isMenuVisible and IsControlJustPressed(0, 177) then  -- Botão Escape
+        if isMenuVisible and IsControlJustPressed(0, 177) then  -- Escape button
             isMenuVisible = false
-            SendNUIMessage({ type = "closeMenu" })  -- Fechar o menu
+            SendNUIMessage({ type = "closeMenu" })  -- Close the menu
         end
     end
 end)
+
