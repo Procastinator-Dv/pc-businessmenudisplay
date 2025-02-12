@@ -3,6 +3,9 @@ print("^1pc-businessmenudisplay by Procastinator V.1.0^7")
 local isMenuVisible = false  -- Boolean to track if the menu is visible
 local spawnedProps = {}  -- Table to store created props
 
+-- Function to determine which targeting system to use
+local useOxTarget = GetResourceState("ox_target") == "started"
+
 -- Function to spawn the ped for each business
 Citizen.CreateThread(function()
     for businessName, business in pairs(Config.Businesses) do
@@ -21,19 +24,31 @@ Citizen.CreateThread(function()
             SetEntityVisible(ped, true, false)
             FreezeEntityPosition(ped, true)
 
-            -- Set up interaction with `qb-target`
-            exports['qb-target']:AddTargetEntity(ped, {
-                options = {
+            -- Set up interaction with the targeting system
+            if useOxTarget then
+                exports.ox_target:addLocalEntity(ped, {
                     {
-                        type = "client",
+                        name = businessName,
                         event = "showBusinessMenu",
                         icon = "fas fa-file",
                         label = "Show Menu",
                         business = businessName,
+                    }
+                })
+            else
+                exports['qb-target']:AddTargetEntity(ped, {
+                    options = {
+                        {
+                            type = "client",
+                            event = "showBusinessMenu",
+                            icon = "fas fa-file",
+                            label = "Show Menu",
+                            business = businessName,
+                        },
                     },
-                },
-                distance = 3.0
-            })
+                    distance = 3.0
+                })
+            end
         else
             -- Load and spawn the prop
             local propModel = business.propModel
@@ -51,19 +66,31 @@ Citizen.CreateThread(function()
             -- Add prop to the spawnedProps table for cleanup
             table.insert(spawnedProps, prop)
 
-            -- Set up interaction with `qb-target`
-            exports['qb-target']:AddTargetEntity(prop, {
-                options = {
+            -- Set up interaction with the targeting system
+            if useOxTarget then
+                exports.ox_target:addLocalEntity(prop, {
                     {
-                        type = "client",
+                        name = businessName,
                         event = "showBusinessMenu",
                         icon = "fas fa-file",
                         label = "Show Menu",
                         business = businessName,
+                    }
+                })
+            else
+                exports['qb-target']:AddTargetEntity(prop, {
+                    options = {
+                        {
+                            type = "client",
+                            event = "showBusinessMenu",
+                            icon = "fas fa-file",
+                            label = "Show Menu",
+                            business = businessName,
+                        },
                     },
-                },
-                distance = 3.0
-            })
+                    distance = 3.0
+                })
+            end
         end
     end
 end)
@@ -109,4 +136,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
