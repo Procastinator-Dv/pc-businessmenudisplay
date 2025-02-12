@@ -55,3 +55,7 @@ Usage:
 
      Credits:
 Script developed by Procastinator.
+
+
+V1.1
+Added ox_target support
