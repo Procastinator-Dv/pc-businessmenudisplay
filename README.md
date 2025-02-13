@@ -1,4 +1,4 @@
-PC-Businessmenudisplay is a FiveM script that allows server owners to create interactive business menus with NPCs or props. Each business can have a unique menu, and players can interact with NPCs or props to view the business menu and make purchases.
+![image](https://github.com/user-attachments/assets/f33a79c2-70dd-4e4c-995d-011b9e458ad5)PC-Businessmenudisplay is a FiveM script that allows server owners to create interactive business menus with NPCs or props. Each business can have a unique menu, and players can interact with NPCs or props to view the business menu and make purchases.
 
 Features:
 Fully configurable for businesses, NPCs, or props.
@@ -59,3 +59,8 @@ Script developed by Procastinator.
 
 V1.1
 Added ox_target support
+
+![image](https://github.com/user-attachments/assets/0a94e0e3-58ae-4410-a79f-f6d0fc1fab50)
+
+![image](https://github.com/user-attachments/assets/aeb899a7-4a21-4a39-8c14-670b350b2277)
+
