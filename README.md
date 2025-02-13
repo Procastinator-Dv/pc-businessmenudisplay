@@ -23,9 +23,6 @@ Installation:
       1. Restart your FiveM server to load the script.
 
 
-Heres a Video Preview : https://youtu.be/JPjYXLPen9o
-
-
       Example Config:
 ```
 Config.Businesses = {
