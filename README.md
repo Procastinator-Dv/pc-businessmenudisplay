@@ -52,6 +52,7 @@ Usage:
 
      Credits:
 Script developed by Procastinator.
+For any support or help join https://discord.gg/6fWcYXEgHY
 
 
 V1.1
